@@ -1,0 +1,30 @@
+digraph LexerAFD {
+    rankdir=LR;
+    node [shape=circle, fontname="Helvetica"];
+    edge [fontname="Helvetica"];
+
+    start [shape=point];
+    q0 [label="q0"];
+    qid [label="qID", shape=doublecircle];
+    qint [label="qINT", shape=doublecircle];
+    qreal [label="qREAL", shape=doublecircle];
+    qexp [label="qEXP"];
+    qexpbody [label="qEXP_BODY", shape=doublecircle];
+    qcomment [label="qCOMMENT"];
+
+    start -> q0;
+    q0 -> qid [label="letra"];
+    qid -> qid [label="letra | dígito"];
+
+    q0 -> qint [label="dígito"];
+    qint -> qint [label="dígito"];
+    qint -> qreal [label=". + dígito"];
+    qreal -> qreal [label="dígito"];
+    qreal -> qexp [label="E | e"];
+    qexp -> qexpbody [label="dígito | (+|-) dígito"];
+    qexpbody -> qexpbody [label="dígito"];
+
+    q0 -> qcomment [label="{"];
+    qcomment -> qcomment [label="qualquer símbolo exceto }"];
+    qcomment -> q0 [label="}"];
+}
